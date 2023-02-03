@@ -9,10 +9,18 @@ main_branch=main=$1
 echo $1
 echo $2
 
+custom_pattern="${INPUT_PATTERN}"
+
 # Get all commit messages from the feature branch that are not in the main branch
 commits=($(git log --pretty="%s EON" origin/$2 ^origin/$1))
 
-pattern="(feat|fix|ci|chore|docs|test|style|refactor): +#([0-9]+) -.{1,}$"
+pattern=""
+if [ -z "${custom_pattern}" ]; then
+  pattern="(feat|fix|ci|chore|docs|test|style|refactor): +#([0-9]+) -.{1,}$"
+else
+  echo "Apply custom pattern: ${custom_pattern}"
+  pattern="${custom_pattern}"
+fi
 
 # Loop through the array and create other structure data
 commits_struct=()
