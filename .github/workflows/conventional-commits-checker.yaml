@@ -1,0 +1,31 @@
+name: "Commit Lint"
+on:
+  pull_request:
+    branches:
+      - main
+      - development
+      - staging
+    types:
+      - opened
+      - reopened
+      - labeled
+      - unlabeled
+      - edited
+      - synchronize
+jobs:
+  custom_test:
+    runs-on: ubuntu-latest
+    name: We test it locally with act
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}
+          fetch-depth: 0
+      - name: Conventional Commits Checker
+        uses: ./ # Uses an action in the root directory
+        id: commits-check
+        with:
+          target-branch: ${{ github.event.pull_request.base.ref }}
+          current-branch: ${{ github.event.pull_request.head.ref }}
+      - name: Get the Result
+        run: echo "${{ steps.commits-check.outputs.commit-checker }}"
