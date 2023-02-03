@@ -9,17 +9,14 @@ main_branch=main=$1
 echo $1
 echo $2
 
-echo "before git log?"
 # Get all commit messages from the feature branch that are not in the main branch
 commits=($(git log --pretty="%s EON" origin/$2 ^origin/$1))
-echo "after git log?"
 
 pattern="(feat|fix|ci|chore|docs|test|style|refactor): +#([0-9]+) -.{1,}$"
 
 # Loop through the array and create other structure data
 commits_struct=()
 for commit in "${commits[@]}"; do
-  # Split the commit message into hash and message
   if [ $commit != "EON" ]; then
     commit_msg+=" $commit"
   fi
@@ -30,13 +27,15 @@ for commit in "${commits[@]}"; do
 done
 
 all_commits_ok="true"
+echo "| commit | status"
 for msg in "${commits_struct[@]}"; do
   if [[ $msg =~ $pattern ]]; then
-    echo "this commit: ${msg} is correct"
+    echo "$msg | ok"
   else
-    echo "this commit: ${msg} is wrong"
+    echo "$msg | invalid"
     all_commits_ok="false"
   fi
+  echo "--"
 done
 
 if [ $all_commits_ok == "true" ]; then
