@@ -7,7 +7,7 @@ Check that all pull request commits are following convetional commits
 `#typeCommit: #cardId - #Msg commit`
 
 # How to use
-```
+```yml
 name: "Commit Lint"
 on:
   pull_request:
