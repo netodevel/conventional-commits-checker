@@ -1,6 +1,9 @@
 # action.yaml
 name: 'Conventional Commits Checker'
 description: 'Check that all pull request commits are following conventional commits'
+branding:
+  icon: 'git-pull-request'
+  color: 'red'
 inputs:
   target-branch:
     description: 'target branch'
