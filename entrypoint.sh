@@ -37,6 +37,10 @@ done
 all_commits_ok="true"
 echo "| commit | status"
 for msg in "${commits_struct[@]}"; do
+  if [[ $msg =~ .*"Merge branch".* ]]; then
+    echo "$msg | skipped"
+    continue
+  fi
   if [[ $msg =~ $pattern ]]; then
     echo "$msg | ok"
   else
