@@ -1,10 +1,7 @@
 # convetional-commits-checker
 Check that all pull request commits are following convetional commits
 
-## The current pattern that is validated
-`eg: feat: #0000 - My Message commit`
-
-`#typeCommit: #cardId - #Msg commit`
+#### The default commit validation pattern is: `feat: #0000 - My Message commit`
 
 # How to use
 ```yml
@@ -36,7 +33,8 @@ jobs:
         id: commits-check
         with: # do not change the order of params
           target-branch: ${{ github.event.pull_request.base.ref }}  #required
-          current-branch: ${{ github.event.pull_request.head.ref }} #required 
+          current-branch: ${{ github.event.pull_request.head.ref }} #required
+          pattern: '(feat|fix|ci|chore|docs|test|style|refactor): .{1,}$' #opcional custom validation commit
 ```
 
 
@@ -48,3 +46,7 @@ jobs:
 
 ### current-branch
 **Required** Need to get all commits, use always:  `${{ github.event.pull_request.head.ref }}`
+
+### pattern
+**Opcional** Custom validation commit, eg: `(feat|fix|ci|chore|docs|test|style|refactor): .{1,}$`
+
