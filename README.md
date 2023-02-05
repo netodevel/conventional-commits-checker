@@ -29,7 +29,7 @@ jobs:
           token: ${{ secrets.PAT }} # your personal access token
           fetch-depth: 0
       - name: Conventional Commits Checker
-        uses: ./ # Uses an action in the root directory
+        uses: netodevel/convetional-commits-checker@v1
         id: commits-check
         with: # do not change the order of params
           target-branch: ${{ github.event.pull_request.base.ref }}  #required
